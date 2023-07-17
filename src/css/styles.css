@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-.widthMessage image{
+.widthMessage .image{
     width: 100%;
 }
 
