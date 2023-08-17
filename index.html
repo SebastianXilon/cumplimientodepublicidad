@@ -4,12 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./src/css/styles.css">
-    <title>Iframe extension next generation</title>
+    <title>Iframe for CETERSA</title>
 </head>
 <body>
-   <div class="widthMessage">
-        <img class="image" src="https://i.ibb.co/vmB2ysY/maria-missaglia-ajuste.png" alt="maria-missaglia-ajuste" border="0">
-    </div>
-   </div> 
+    <div id="calculadora">
+        <h3>¿Quieres conocer una estimación?</h3>
+        <label for="d1">Tamaño en m<sup>2</sup>:</label>
+        <input type="number" id="d1" placeholder="Por ejemplo: 320" value=0 onchange="calcular
+        ()"><br>
+        <label for="r1">Tipo de edificación:</label><br>
+        <input type="radio" name="tipo" id="r1"checked>
+        <label for="r1">Vivienda Unifamiliar</label><br>
+        <input type="radio" name="tipo" id="r2">
+        <label for="r2">Edificios de Viviendas</label><br>
+        <input type="radio" name="tipo" id="r3">
+        <label for="r3">Naves Industriales</label><br>
+        <input type="submit" id="btnCalc" onclick="calcular();" value="Calcular">
+        <p id="resultado">0,00€</p>
+        <p id="paraTipo"></p>
+        <p id="cuidadin">Estos precios son una referencia y no constituyen un contrato o compromis
+        o en modo alguno. </p>
+        </div>
+        <script id="rendered-js" >
+        function calcular(){
+        //definimos variables
+        var v1 = document.getElementById('d1').value;
+        var tipo=undefined;
+        var d1=0;
+        if(document.getElementById('r1').checked) {
+        tipo="vivienda unifamiliar";
+        //casos unifamiliar:
+       // Calculadora de estructuras - Cetersa 5
+        if(v1<=0){ d1=0; }
+        if(v1>=1 && v1<100){ d1=500; }
+        if(v1>=101 && v1<201){ d1=600; }
+        //if(v1>= 201){ d1=700; }
+        if(v1>= 201){ d1=v1*3.4825870647; }
+        }
+        else if(document.getElementById('r2').checked) {
+        tipo="edificio de viviendas";
+        //casos vivienda:
+        if(v1<=0){ d1=0; }
+        if(v1>=1 && v1<500){ d1=1000; }
+        if(v1>=501 && v1<1000){ d1=1300; }
+        if(v1>= 1001 && v1<1500){ d1=1800; }
+        if(v1>= 1501 && v1<2000){ d1=2200; }
+        if(v1>= 2001 && v1<2500){ d1=2700; }
+        if(v1>= 2501 && v1<3000){ d1=3200; }
+        if(v1>= 3000 ){ d1=v1*1.06702234078; }
+        }
+        else if(document.getElementById('r3').checked) {
+        tipo="nave industrial";
+        //casos nave:
+        if(v1<=0){ d1=0; }
+        if(v1>0 && v1<=300){ d1=700; }
+        //if(v1>= 301){ d1 =v1*2.34; }
+        if(v1>= 301){
+        alert("En el caso de las Naves Industriales, sólo hasta 300 metros cuadrados");
+        d1=700;
+        v1=300; }
+        }
+        console.log(tipo);
+        console.log(d1);
+        //Operación matemática
+        var final = (d1*1);
+        //redondear a 2 decimales
+        final = final.toFixed(2);
+        document.getElementById('resultado').innerHTML=final+"€";
+        document.getElementById('paraTipo').innerHTML="Para una "+tipo+" de "+v1+" m<sup>2</sup>.";
+        }
+        calcular();
+        </script>
 </body>
 </html>
